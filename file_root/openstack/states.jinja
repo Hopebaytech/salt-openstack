@@ -19,6 +19,7 @@
         "ntp",
         "system",
         "database",
+        "mongodb",
         "message_queue",
         "openstack.keystone",
         "openstack.glance",
@@ -26,23 +27,29 @@
         "openstack.neutron.controller",
         "openstack.cinder.controller",
         "openstack.heat",
-        "openstack.horizon"
+        "openstack.horizon",
+        "openstack.ceilometer.controller"
     ]
 %}
 
 {% set network_states = network_states + [
+        "system",
         "openstack.neutron.network"
     ]
 %}
 
 {% set compute_states = compute_states + [
+        "system",
         "openstack.neutron.compute",
-        "openstack.nova.compute"
+        "openstack.nova.compute",
+        "openstack.ceilometer.compute"
     ]
 %}
 
 {% set storage_states = storage_states + [
-        "openstack.cinder.storage"
+        "system",
+        "openstack.cinder.storage",
+        "openstack.ceilometer.storage"
     ]
 %}
 

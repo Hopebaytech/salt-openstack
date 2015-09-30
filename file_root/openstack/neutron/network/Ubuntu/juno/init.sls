@@ -143,7 +143,11 @@ neutron_network_dnsmasq_conf:
     - name: {{ neutron['conf']['dnsmasq_config_file'] }}
     - sections:
         DEFAULT_IMPLICIT:
+{% if 'vxlan' in neutron['ml2_type_drivers'] %}
+          dhcp-option-force: 26,1422
+{% else %}
           dhcp-option-force: 26,1454
+{% endif %}
     - require:
       - ini: neutron_network_dhcp_agent_conf
 

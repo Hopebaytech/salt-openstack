@@ -18,6 +18,18 @@ resources:
     services:
       ntp: "ntp"
 
+  mongodb:
+    dirs:
+      - "/var/lib/mongodb"
+    conf:
+      mongod: "/etc/mongodb.conf"
+    packages:
+      - "mongodb-server"
+      - "mongodb-clients"
+      - "python-pymongo"
+    services:
+      mongodb: "mongodb"
+
   mysql:
     dirs:
       - "/var/lib/mysql"
@@ -498,3 +510,69 @@ resources:
         files:
           sqlite: "/var/lib/heat/heat.sqlite"
           log_dir: "/var/log/heat"
+
+  ceilometer:
+    dirs:
+      - "/var/lib/ceilometer"
+      - "/etc/ceilometer"
+    openstack_series:
+      kilo:
+        conf:
+          ceilometer: "/etc/ceilometer/ceilometer.conf"
+          ceilometer_compute: "/etc/nova/nova.conf"
+          ceilometer_volume: "/etc/cinder/cinder.conf"
+          ceilometer_image_api: "/etc/glance/glance-api.conf"
+          ceilometer_image_registry: "/etc/glance/glance-registry.conf"
+        packages:
+          controller:
+            - "ceilometer-api"
+            - "ceilometer-collector"
+            - "ceilometer-agent-central"
+            - "ceilometer-agent-notification"
+            - "ceilometer-alarm-evaluator"
+            - "ceilometer-alarm-notifier"
+            - "python-ceilometerclient"
+          compute:
+            - "ceilometer-agent-compute"
+        services:
+          controller:
+            agent-central: "ceilometer-agent-central"
+            agent-notification: "ceilometer-agent-notification"
+            api: "ceilometer-api"
+            collector: "ceilometer-collector"
+            alarm-evaluator: "ceilometer-alarm-evaluator"
+            alarm-notifier: "ceilometer-alarm-notifier"
+          compute:
+            agent-compute: "ceilometer-agent-compute"
+        files:
+          sqlite: "/var/lib/ceilometer/ceilometer.sqlite"
+      juno:
+        conf:
+          ceilometer: "/etc/ceilometer/ceilometer.conf"
+          ceilometer_compute: "/etc/nova/nova.conf"
+          ceilometer_volume: "/etc/cinder/cinder.conf"
+          ceilometer_image_api: "/etc/glance/glance-api.conf"
+          ceilometer_image_registry: "/etc/glance/glance-registry.conf"
+        packages:
+          controller:
+            - "ceilometer-api"
+            - "ceilometer-collector"
+            - "ceilometer-agent-central"
+            - "ceilometer-agent-notification"
+            - "ceilometer-alarm-evaluator"
+            - "ceilometer-alarm-notifier"
+            - "python-ceilometerclient"
+          compute:
+            - "ceilometer-agent-compute"
+        services:
+          controller:
+            agent-central: "ceilometer-agent-central"
+            agent-notification: "ceilometer-agent-notification"
+            api: "ceilometer-api"
+            collector: "ceilometer-collector"
+            alarm-evaluator: "ceilometer-alarm-evaluator"
+            alarm-notifier: "ceilometer-alarm-notifier"
+          compute:
+            agent-compute: "ceilometer-agent-compute"
+        files:
+          sqlite: "/var/lib/ceilometer/ceilometer.sqlite"

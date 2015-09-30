@@ -1,7 +1,7 @@
 openstack: 
-  "<minion_id_1>,<minion_id_2>":
+  "controller1,neutron1,compute1,compute2":
     - match: list
     - {{ grains['os'] }}
-    - <openstack_environment_name>.credentials
-    - <openstack_environment_name>.environment
-    - <openstack_environment_name>.networking
+    - cc2kilo_template.credentials
+    - cc2kilo_template.environment
+    - cc2kilo_template.networking
