@@ -41,7 +41,12 @@ def _keystone_services():
                          'endpoint': {'adminurl': 'http://{0}:8000/v1',
                                       'internalurl': 'http://{0}:8000/v1',
                                       'publicurl': 'http://{0}:8000/v1'},
-                         'service_type': 'cloudformation'}}
+                         'service_type': 'cloudformation'},
+            'ceilometer': {'description': 'Telemetry service',
+                           'endpoint': {'adminurl': 'http://{0}:8777',
+                                        'internalurl': 'http://{0}:8777',
+                                        'publicurl': 'http://{0}:8777'},
+                           'service_type': 'metering'}}
 
 
 def _openstack_service_context(openstack_service):
@@ -512,6 +517,14 @@ def system():
     return __salt__['pillar.get']('resources:system')
 
 
+def mongodb():
+    context = __salt__['pillar.get']('resources:mongodb')
+    context.update({
+        'databases': __salt__['pillar.get']('databases', default=[])
+    })
+    return context
+
+
 def mysql():
     context = __salt__['pillar.get']('resources:mysql')
     context.update({
@@ -618,3 +631,11 @@ def cinder():
 
 def heat():
     return _openstack_service_context('heat')
+
+
+def ceilometer():
+    context = _openstack_service_context('ceilometer')
+    context.update({
+        'metering_secret': __salt__['pillar.get']('ceilometer:metering_secret'),
+    })
+    return context
