@@ -4,7 +4,8 @@
 {% set blocks_4k = ((cinder['volumes_group_size']|int)*(2**30)/4096)|int %}
 cinder_storage_volumes_group_dd_file:
   cmd.run:
-    - name: dd if=/dev/zero of={{ cinder['volumes_path'] }} bs=4K count={{ blocks_4k }}
+    #- name: dd if=/dev/zero of={{ cinder['volumes_path'] }} bs=4K count={{ blocks_4k }}
+    - name: truncate -s {{ cinder['volumes_group_size'] }}G {{ cinder['volumes_path'] }}
     - unless: losetup {{ cinder['loopback_device'] }}
     - require:
 {% for pkg in cinder['packages']['storage'] %}
