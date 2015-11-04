@@ -23,13 +23,20 @@ neutron_controller_conf:
         DEFAULT: 
           auth_strategy: keystone
           core_plugin: ml2
-          service_plugins: router
+          service_plugins: "router,lbaas,metering"
           allow_overlapping_ips: True
           debug: "{{ salt['openstack_utils.boolean_value'](openstack_parameters['debug_mode']) }}"
           verbose: "{{ salt['openstack_utils.boolean_value'](openstack_parameters['debug_mode']) }}"
           notify_nova_on_port_status_changes: True
           notify_nova_on_port_data_changes: True
           nova_url: "http://{{ openstack_parameters['controller_ip'] }}:8774/v2"
+          network_scheduler_driver: "neutron.scheduler.dhcp_agent_scheduler.ChanceScheduler"
+          router_scheduler_driver: "neutron.scheduler.l3_agent_scheduler.ChanceScheduler"
+          loadbalancer_pool_scheduler_driver: "neutron.services.loadbalancer.agent_scheduler.ChanceScheduler"
+          network_auto_schedule: True
+          router_auto_schedule: True
+          allow_automatic_l3agent_failover: True
+          allow_automatic_dhcp_failover: True
         keystone_authtoken: 
           auth_uri: "http://{{ openstack_parameters['controller_ip'] }}:5000"
           auth_url: "http://{{ openstack_parameters['controller_ip'] }}:35357"
@@ -48,6 +55,8 @@ neutron_controller_conf:
           project_name: service
           username: nova
           password: "{{ service_users['nova']['password'] }}"
+        service_providers:
+          service_provider: "LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default"
     - require:
       - ini: neutron_controller_conf_keystone_authtoken
 

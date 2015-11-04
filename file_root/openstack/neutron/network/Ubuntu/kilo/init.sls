@@ -38,7 +38,7 @@ neutron_network_conf:
         DEFAULT: 
           auth_strategy: keystone
           core_plugin: ml2
-          service_plugins: router
+          service_plugins: "router,lbaas,metering"
           allow_overlapping_ips: True
           debug: "{{ salt['openstack_utils.boolean_value'](openstack_parameters['debug_mode']) }}"
           verbose: "{{ salt['openstack_utils.boolean_value'](openstack_parameters['debug_mode']) }}"
@@ -90,7 +90,7 @@ neutron_network_ml2_conf:
 {% if neutron['bridge_mappings'] %}
           bridge_mappings: "{{ ','.join(neutron['bridge_mappings']) }}"
 {% endif %}
-{% if salt['openstack_utils.boolean_value'](neutron['tunneling']['enable']) %} 
+{% if salt['openstack_utils.boolean_value'](neutron['tunneling']['enable']) %}
           tunnel_bridge: "{{ neutron['tunneling']['bridge'] }}"
         agent:
           tunnel_types: "{{ ','.join(neutron['tunneling']['types']) }}"

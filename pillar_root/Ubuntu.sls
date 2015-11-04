@@ -263,6 +263,7 @@ resources:
             - "neutron-server"
             - "neutron-plugin-ml2"
             - "python-neutronclient"
+            - "python-neutron-lbaas"
           compute:
             kvm:
               - "neutron-plugin-ml2"
