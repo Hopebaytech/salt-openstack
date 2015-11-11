@@ -18,6 +18,12 @@ hosts:
   "compute01": "10.10.99.43"
   "compute02": "10.10.99.44"
 
+hosts_int:
+  "controller01": "192.168.250.41"
+  "neutron01": "192.168.250.42"
+  "compute01": "192.168.250.43"
+  "compute02": "192.168.250.44"
+
 controller: "controller01"
 network: "neutron01"
 storage:
