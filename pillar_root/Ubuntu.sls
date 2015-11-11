@@ -375,6 +375,7 @@ resources:
   openvswitch:
     conf:
       promisc_interfaces: "/etc/init/openstack-promisc-interfaces.conf"
+      promisc_interfaces_script: "/root/openstack-promisc-interfaces.sh"
       interfaces: "/etc/network/interfaces"
 
   horizon:

@@ -25,3 +25,35 @@ openvswitch_interfaces_promisc_upstart_job:
       - cmd: openvswitch_interface_{{ bridge }}_{{ neutron['bridges'][bridge] }}_up
   {% endif %}
 {% endfor %}
+
+
+openvswitch_promisc_interfaces_script:
+  file.managed:
+    - name: {{ openvswitch['conf']['promisc_interfaces_script'] }}
+    - user: root
+    - group: root
+    - mode: 755
+    - contents: |
+        #!/usr/bin/env bash
+
+        {% set defaultgw = salt.network.default_route(family='inet')[0].gateway %}
+
+        # change route to br interface
+{% for bridge in neutron['bridges'] %}
+  {% if neutron['bridges'][bridge] %}
+        {% set ipaddr = salt.network.interface(neutron['bridges'][bridge])[0].address %}
+        {% set netmask = salt.network.interface(neutron['bridges'][bridge])[0].netmask %}
+        ifconfig {{ bridge }} {{ ipaddr }} netmask {{ netmask }}
+        # delete route (default route maybe included)
+        ip route flush dev {{ neutron['bridges'][bridge] }}
+  {% endif %}
+{% endfor %}
+
+        # add default route back
+        route add default gw {{ defaultgw }}
+    - require:
+{% for bridge in neutron['bridges'] %}
+  {% if neutron['bridges'][bridge] %}
+      - cmd: openvswitch_interface_{{ bridge }}_{{ neutron['bridges'][bridge] }}_up
+  {% endif %}
+{% endfor %}
