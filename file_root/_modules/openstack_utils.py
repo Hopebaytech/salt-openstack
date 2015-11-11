@@ -204,6 +204,13 @@ def minion_ip(minion_id=None):
     return  __salt__['pillar.get']('hosts:%s' % minion_id, default='localhost')
 
 
+def minion_int_ip(minion_id=None):
+    '''
+        returns the minion_int_ip of a minion as defined in the pillar
+    '''
+    return  __salt__['pillar.get']('hosts_int:%s' % minion_id, default=None)
+
+
 def ml2_type_drivers():
     '''
         returns an array with neutron ml2 type drivers defined in pillar
