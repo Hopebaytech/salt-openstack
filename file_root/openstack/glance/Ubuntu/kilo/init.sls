@@ -12,6 +12,7 @@ glance_api_conf_keystone_authtoken:
 {% for pkg in glance['packages'] %}
       - pkg: glance_{{ pkg }}_install
 {% endfor %}
+    - reload_modules: True
 
 
 glance_api_conf:
