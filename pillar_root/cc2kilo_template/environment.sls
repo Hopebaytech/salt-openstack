@@ -42,16 +42,16 @@ nova:
   cpu_allocation_ratio: "16"
   ram_allocation_ratio: "1.5"
 
-#glance:
-#  images:
-#    cirros:
-#      user: "admin"
-#      tenant: "admin"
-#      parameters:
-#        min_disk: 1
-#        min_ram: 0
-#        copy_from: "http://download.cirros-cloud.net/0.3.3/cirros-0.3.3-x86_64-disk.img"
-#        disk_format: qcow2
-#        container_format: bare
-#        is_public: True
-#        protected: False
+glance:
+  images:
+    cirros:
+      user: "admin"
+      tenant: "admin"
+      parameters:
+        min_disk: 1
+        min_ram: 0
+        copy_from: "http://download.cirros-cloud.net/0.3.3/cirros-0.3.3-x86_64-disk.img"
+        disk_format: qcow2
+        container_format: bare
+        is_public: True
+        protected: False

@@ -55,13 +55,23 @@ neutron:
               end: '10.10.95.200'
           enable_dhcp: False
           gateway_ip: "10.0.0.1"
-    private:
+    default:
       user: "admin"
       tenant: "admin"
       admin_state_up: True
       subnets:
         private_subnet:
           cidr: '192.168.111.0/24'
+          enable_dhcp: True
+          dns_nameservers:
+            - 8.8.8.8
+    mocha-network:
+      user: "mochauser"
+      tenant: "mocha"
+      admin_state_up: True
+      subnets:
+        mocha_subnet:
+          cidr: '192.168.200.0/24'
           enable_dhcp: True
           dns_nameservers:
             - 8.8.8.8

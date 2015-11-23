@@ -56,6 +56,11 @@ keystone:
           keystonerc:
             create: True
             path: /root/keystonerc_admin
+    mocha:
+      users:
+        mochauser:
+          password: "mochamocha"
+          email: "salt@openstack.com"
     service:
       users:
         cinder:
