@@ -57,3 +57,10 @@ openvswitch_promisc_interfaces_script:
       - cmd: openvswitch_interface_{{ bridge }}_{{ neutron['bridges'][bridge] }}_up
   {% endif %}
 {% endfor %}
+
+
+openvswitch_promisc_interfaces_script_run:
+  cmd.run:
+    - name: "sleep 3 && {{ openvswitch['conf']['promisc_interfaces_script'] }}"
+    - require:
+      - file: {{ openvswitch['conf']['promisc_interfaces_script'] }}

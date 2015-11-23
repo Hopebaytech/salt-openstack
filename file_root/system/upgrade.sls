@@ -5,6 +5,6 @@ system_upgrade:
 
 system_restart_salt_minion:
   cmd.run:
-  - name: service salt-minion restart
+  - name: "service salt-minion restart && sleep 3"
   - require:
       - pkg: system_upgrade
