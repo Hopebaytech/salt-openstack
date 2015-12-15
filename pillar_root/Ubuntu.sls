@@ -276,6 +276,7 @@ resources:
             - "neutron-dhcp-agent"
             - "neutron-metadata-agent"
             - "python-neutronclient"
+            - "neutron-lbaas-agent"
             - "conntrack"
         services:
           controller:
@@ -534,6 +535,7 @@ resources:
             - "ceilometer-alarm-evaluator"
             - "ceilometer-alarm-notifier"
             - "python-ceilometerclient"
+            - "python-awsauth"
           compute:
             - "ceilometer-agent-compute"
         services:
@@ -564,6 +566,7 @@ resources:
             - "ceilometer-alarm-evaluator"
             - "ceilometer-alarm-notifier"
             - "python-ceilometerclient"
+            - "python-awsauth"
           compute:
             - "ceilometer-agent-compute"
         services:
@@ -578,3 +581,25 @@ resources:
             agent-compute: "ceilometer-agent-compute"
         files:
           sqlite: "/var/lib/ceilometer/ceilometer.sqlite"
+
+  cloudkitty:
+    conf:
+      cloudkitty: "/etc/apt/sources.list.d/cloudkitty-kilo.list"
+    packages:
+      - "ubuntu-cloud-keyring"
+    repositories:
+      openstack:
+        series:
+          kilo: "deb http://archive.objectif-libre.com/cloudkitty/ubuntu trusty/kilo main"
+    openstack_series:
+      kilo:
+        conf:
+          cloudkitty: "/etc/cloudkitty/cloudkitty.conf"
+        packages:
+          - "python-cloudkittyclient"
+          - "cloudkitty-api"
+          - "cloudkitty-processor"
+          - "cloudkitty-dashboard"
+        services:
+          api: "cloudkitty-api"
+          processor: "cloudkitty-processor"

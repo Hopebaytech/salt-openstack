@@ -34,6 +34,10 @@ databases:
     db_name: "ceilometer"
     username: "ceilometer"
     password: "RandomPassword123"
+  cloudkitty:
+    db_name: "cloudkitty"
+    username: "cloudkitty"
+    password: "RandomPassword123"
 
 neutron:
   metadata_secret: "RandomPassword123"
@@ -44,6 +48,7 @@ keystone:
     - "admin"
     - "heat_stack_owner"
     - "heat_stack_user"
+    - "rating"
   tenants:
     admin:
       users:
@@ -60,6 +65,8 @@ keystone:
       users:
         mochauser:
           password: "mochamocha"
+          roles:
+            - "rating"
           email: "salt@openstack.com"
     service:
       users:
@@ -94,6 +101,11 @@ keystone:
             - "admin"
           email: "salt@openstack.com"
         ceilometer:
+          password: "RandomPassword123"
+          roles:
+            - "admin"
+          email: "salt@openstack.com"
+        cloudkitty:
           password: "RandomPassword123"
           roles:
             - "admin"

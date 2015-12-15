@@ -46,7 +46,12 @@ def _keystone_services():
                            'endpoint': {'adminurl': 'http://{0}:8777',
                                         'internalurl': 'http://{0}:8777',
                                         'publicurl': 'http://{0}:8777'},
-                           'service_type': 'metering'}}
+                           'service_type': 'metering'},
+            'cloudkitty': {'description': 'Rating service',
+                           'endpoint': {'adminurl': 'http://{0}:8888',
+                                        'internalurl': 'http://{0}:8888',
+                                        'publicurl': 'http://{0}:8888'},
+                           'service_type': 'rating'}}
 
 
 def _openstack_service_context(openstack_service):
@@ -644,5 +649,16 @@ def ceilometer():
     context = _openstack_service_context('ceilometer')
     context.update({
         'metering_secret': __salt__['pillar.get']('ceilometer:metering_secret'),
+    })
+    return context
+
+
+def cloudkitty():
+    context = _openstack_service_context('cloudkitty')
+    series = openstack_series()
+    context.update({
+        'path': __salt__['pillar.get']('resources:cloudkitty:conf:cloudkitty'),
+        'deb_repo': __salt__['pillar.get']('resources:'
+                    'cloudkitty:repositories:openstack:series:%s' % series)
     })
     return context
