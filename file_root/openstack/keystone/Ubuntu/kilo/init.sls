@@ -56,6 +56,7 @@ keystone_virtual_host_conf:
             WSGIScriptAlias / {{ keystone['files']['www'] }}/main
             WSGIApplicationGroup %{GLOBAL}
             WSGIPassAuthorization On
+            WSGIChunkedRequest On
             <IfVersion >= 2.4>
               ErrorLogFormat "%{cu}t %M"
             </IfVersion>
@@ -70,6 +71,7 @@ keystone_virtual_host_conf:
             WSGIScriptAlias / {{ keystone['files']['www'] }}/admin
             WSGIApplicationGroup %{GLOBAL}
             WSGIPassAuthorization On
+            WSGIChunkedRequest On
             <IfVersion >= 2.4>
               ErrorLogFormat "%{cu}t %M"
             </IfVersion>
