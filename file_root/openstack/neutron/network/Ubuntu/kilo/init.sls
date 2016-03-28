@@ -176,6 +176,20 @@ neutron_network_metadata_agent_conf:
 {% endfor %}
 
 
+neutron_network_lbaas_agent_conf:
+  ini.options_present:
+    - name: "{{ neutron['conf']['lbaas_agent'] }}"
+    - sections: 
+        DEFAULT: 
+          interface_driver: neutron.agent.linux.interface.OVSInterfaceDriver
+          device_driver: neutron.services.loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver
+          debug: "{{ salt['openstack_utils.boolean_value'](openstack_parameters['debug_mode']) }}"
+    - require:
+{% for pkg in neutron['packages']['network'] %}
+      - pkg: neutron_network_{{ pkg }}_install
+{% endfor %}
+
+
 neutron_network_openvswitch_running:
   service.running:
     - enable: True

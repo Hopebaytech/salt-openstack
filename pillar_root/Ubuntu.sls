@@ -54,6 +54,11 @@ resources:
     packages:
       - "rabbitmq-server"
 
+  ceph:
+    packages:
+      - "python-rbd"
+      - "ceph-common"
+
   keystone:
     dirs:
       - "/var/lib/keystone"
@@ -71,6 +76,7 @@ resources:
           - "memcached"
           - "python-memcache"
           - "curl"
+          - "libnss3-tools"
         services:
           keystone: "keystone"
           apache: "apache2"
@@ -258,6 +264,7 @@ resources:
           dhcp_agent: "/etc/neutron/dhcp_agent.ini"
           dnsmasq_config_file: "/etc/neutron/dnsmasq-neutron.conf"
           metadata_agent: "/etc/neutron/metadata_agent.ini"
+          lbaas_agent: "/etc/neutron/lbaas_agent.ini"
         packages:
           controller:
             - "neutron-server"
@@ -377,6 +384,7 @@ resources:
     conf:
       promisc_interfaces: "/etc/init/openstack-promisc-interfaces.conf"
       promisc_interfaces_script: "/root/openstack-promisc-interfaces.sh"
+      promisc_interfaces_route: "/etc/init/openstack-promisc-interfaces-route.conf"
       interfaces: "/etc/network/interfaces"
 
   horizon:
@@ -603,3 +611,29 @@ resources:
         services:
           api: "cloudkitty-api"
           processor: "cloudkitty-processor"
+
+  trove:
+    dirs:
+      - "/var/lib/trove"
+      - "/etc/trove"
+    openstack_series:
+      kilo:
+        conf:
+          trove: "/etc/trove/trove.conf"
+          trove_conductor: "/etc/trove/trove-conductor.conf"
+          trove_taskmanager: "/etc/trove/trove-taskmanager.conf"
+        cloudinit:
+          mysql: "/etc/trove/cloudinit/mysql.cloudinit"
+        packages:
+          - "trove-api"
+          - "trove-common"
+          - "trove-taskmanager"
+          - "trove-conductor"
+          - "python-troveclient"
+          - "python-trove"
+        services:
+          trove_api: "trove-api"
+          trove_conductor: "trove-conductor"
+          trove_taskmanager: "trove-taskmanager"
+        files:
+          sqlite: "/var/lib/trove/trove_test.sqlite"

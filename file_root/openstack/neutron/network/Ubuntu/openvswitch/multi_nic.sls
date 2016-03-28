@@ -64,3 +64,21 @@ openvswitch_promisc_interfaces_script_run:
     - name: "sleep 3 && {{ openvswitch['conf']['promisc_interfaces_script'] }}"
     - require:
       - file: {{ openvswitch['conf']['promisc_interfaces_script'] }}
+
+
+openvswitch_promisc_interfaces_script_upstart_job:
+  file.managed:
+    - name: {{ openvswitch['conf']['promisc_interfaces_route'] }}
+    - user: root
+    - group: root
+    - mode: 644
+    - contents: |
+        start on started neutron-plugin-openvswitch-agent
+
+        script
+
+        sleep 3 && {{ openvswitch['conf']['promisc_interfaces_script'] }}
+
+        end script
+    - require:
+      - cmd: openvswitch_promisc_interfaces_script_run

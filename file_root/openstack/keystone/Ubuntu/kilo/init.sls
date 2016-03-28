@@ -16,7 +16,7 @@ keystone_conf:
           servers: "localhost:11211"
         token:
           provider: "keystone.token.providers.uuid.Provider"
-          driver: "keystone.token.persistence.backends.memcache.Token"
+          driver: "keystone.token.persistence.backends.sql.Token"
         revoke:
           driver: "keystone.contrib.revoke.backends.sql.Revoke"
     - require:

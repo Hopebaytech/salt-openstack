@@ -38,6 +38,10 @@ databases:
     db_name: "cloudkitty"
     username: "cloudkitty"
     password: "RandomPassword123"
+  trove:
+    db_name: "trove"
+    username: "trove"
+    password: "RandomPassword123"
 
 neutron:
   metadata_secret: "RandomPassword123"
@@ -106,6 +110,16 @@ keystone:
             - "admin"
           email: "salt@openstack.com"
         cloudkitty:
+          password: "RandomPassword123"
+          roles:
+            - "admin"
+          email: "salt@openstack.com"
+        trove:
+          password: "RandomPassword123"
+          roles:
+            - "admin"
+          email: "salt@openstack.com"
+        swift:
           password: "RandomPassword123"
           roles:
             - "admin"

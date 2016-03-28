@@ -29,7 +29,9 @@
         "openstack.heat",
         "openstack.horizon",
         "openstack.ceilometer.controller",
-        "openstack.cloudkitty"
+        "openstack.cloudkitty",
+        "openstack.trove",
+        "ceph.controller"
     ]
 %}
 
@@ -43,7 +45,8 @@
         "system",
         "openstack.neutron.compute",
         "openstack.nova.compute",
-        "openstack.ceilometer.compute"
+        "openstack.ceilometer.compute",
+        "ceph.compute"
     ]
 %}
 
@@ -53,7 +56,6 @@
         "openstack.ceilometer.storage"
     ]
 %}
-
 
 {% set minion_states = [] %}
 {% set minion_id = grains['id'] %}
@@ -95,3 +97,4 @@
     {% endif %}
   {% endfor %}
 {% endif %}
+

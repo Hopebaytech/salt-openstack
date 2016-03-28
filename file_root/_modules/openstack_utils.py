@@ -51,7 +51,17 @@ def _keystone_services():
                            'endpoint': {'adminurl': 'http://{0}:8888',
                                         'internalurl': 'http://{0}:8888',
                                         'publicurl': 'http://{0}:8888'},
-                           'service_type': 'rating'}}
+                           'service_type': 'rating'},
+            'trove': {'description': 'OpenStack Database Service',
+                     'endpoint': {'adminurl': 'http://{0}:8779/v1.0/%(tenant_id)s',
+                                  'internalurl': 'http://{0}:8779/v1.0/%(tenant_id)s',
+                                  'publicurl': 'http://{0}:8779/v1.0/%(tenant_id)s'},
+                     'service_type': 'database'},
+            'swift': {'description': 'Swift Service',
+                           'endpoint': {'adminurl': 'https://radosgw:8080/swift/v1',
+                                        'internalurl': 'https://radosgw:8080/swift/v1',
+                                        'publicurl': 'https://radosgw:8080/swift/v1'},
+                           'service_type': 'object-store'}}
 
 
 def _openstack_service_context(openstack_service):
@@ -660,5 +670,13 @@ def cloudkitty():
         'path': __salt__['pillar.get']('resources:cloudkitty:conf:cloudkitty'),
         'deb_repo': __salt__['pillar.get']('resources:'
                     'cloudkitty:repositories:openstack:series:%s' % series)
+    })
+    return context
+
+
+def trove():
+    context = _openstack_service_context('trove')
+    context.update({
+        'images': __salt__['pillar.get']('trove:images', default=[])
     })
     return context

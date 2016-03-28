@@ -18,5 +18,7 @@ glance_{{ image }}_create:
   {% if salt['openstack_utils.compare_ignore_case'](openstack_parameters['reset'], 'soft') %}
     - require:
       - cmd: glance_reset
+      # required only when ceph with glance is used 
+      - cmd: glance_ceph_wait
   {% endif %}
 {% endfor %}

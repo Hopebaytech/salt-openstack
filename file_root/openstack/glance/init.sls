@@ -4,4 +4,4 @@
 include:
   - openstack.glance.packages
   - openstack.glance.{{ grains['os'] }}.{{ openstack_parameters['series'] }}
-  - openstack.glance.images
+
